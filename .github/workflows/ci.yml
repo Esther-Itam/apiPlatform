@@ -39,9 +39,9 @@ jobs:
       - name: Check HTTPS reachability
         run: curl  -vk -o /dev/null https://localhost
       - name: Install PHPUnit
-        run: docker-compose exec -T php composer require -n symfony/test-pack symfony/http-client justinrainbow/json-schema 
+        run: docker-compose exec -T php composer require -n symfony/test-pack symfony/http-client justinrainbow/json-schema
       - name: ls
-        run: docker-compose exec -T php ls -al 
+        run: docker-compose exec -T php ls -al
       - name: pwd
         run: docker-compose exec -T php pwd
       - name: PHPUnit
@@ -50,3 +50,9 @@ jobs:
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T php bin/console doctrine:schema:validate --skip-sync
       - name: Jest
         run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml exec -T pwa yarn test --ci --passWithNoTests
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: master
+          token: ${{ secrets.PAT }}
