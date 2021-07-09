@@ -1,19 +1,20 @@
 name: CI
-
+name: deploy website
 on:
   push:
     branches:
       - main
   pull_request: ~
   workflow_dispatch: ~
-
+[pull_request]
 jobs:
   tests:
     name: Tests
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_ENTRYPOINT: https://localhost
-
+  deploy:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -60,13 +61,6 @@ jobs:
           token: ${{ secrets.PAT }}
           branch: master
           base: main
-
-name: deploy website
-on: [pull_request]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v2
       - uses: amondnet/vercel-action@v20
         with:
@@ -76,4 +70,3 @@ jobs:
           vercel-org-id: ${{ secrets.ORG_ID}}  #Required
           vercel-project-id: ${{ secrets.PROJECT_ID}} #Required 
           working-directory: ./pwa
-              
