@@ -60,6 +60,12 @@ jobs:
           token: ${{ secrets.PAT }}
           branch: master
           base: main
+
+name: deploy website
+
+on: 
+  pull_request: ~
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
