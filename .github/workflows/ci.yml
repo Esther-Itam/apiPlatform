@@ -13,8 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_ENTRYPOINT: https://localhost
-  deploy:
-    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -61,6 +60,10 @@ jobs:
           token: ${{ secrets.PAT }}
           branch: master
           base: main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+  steps:  
       - name: deploy website
         uses: actions/checkout@v2
         uses: amondnet/vercel-action@v20
